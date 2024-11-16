@@ -111,21 +111,33 @@ const Login = () => {
           </p>
         )}
       </form>
-      <Link
-        to="/forgot-password"
-        style={{
-          display: "block",
-          textAlign: "center",
-          marginTop: "15px",
-          color: "#007bff",
-          textDecoration: "none",
-          fontWeight: "bold",
-        }}
-        onMouseOver={(e) => (e.target.style.textDecoration = "underline")}
-        onMouseOut={(e) => (e.target.style.textDecoration = "none")}
-      >
-        Forgot Password?
-      </Link>
+      <div style={{ textAlign: "center", marginTop: "15px" }}>
+        <Link
+          to="/forgot-password"
+          style={{
+            color: "#007bff",
+            textDecoration: "none",
+            fontWeight: "bold",
+          }}
+          onMouseOver={(e) => (e.target.style.textDecoration = "underline")}
+          onMouseOut={(e) => (e.target.style.textDecoration = "none")}
+        >
+          Forgot Password?
+        </Link>
+        <span style={{ margin: "0 10px", color: "#555" }}>|</span>
+        <Link
+          to="/register"
+          style={{
+            color: "#007bff",
+            textDecoration: "none",
+            fontWeight: "bold",
+          }}
+          onMouseOver={(e) => (e.target.style.textDecoration = "underline")}
+          onMouseOut={(e) => (e.target.style.textDecoration = "none")}
+        >
+          Create an Account
+        </Link>
+      </div>
     </div>
   );
 };
