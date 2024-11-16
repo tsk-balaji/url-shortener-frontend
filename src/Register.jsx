@@ -11,6 +11,7 @@ const Register = () => {
     password: "",
   });
   const [error, setError] = useState("");
+  const [existingUser, setExistingUser] = useState(""); // New state for existing user email
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,7 +28,20 @@ const Register = () => {
       alert(response.data.message); // Registration success message
       navigate("/"); // Redirect to login
     } catch (error) {
-      setError(error.response?.data?.message || "Registration failed");
+      console.log(error);
+      // Improved error handling with more specific messages
+      if (error.response?.status === 400) {
+        setError("Please fill in all required fields correctly");
+      } else if (error.response?.status === 409) {
+        setError(
+          "This email is already registered. Please use a different email."
+        );
+        setExistingUser(error.response?.data?.existingUser || ""); // Extract existing user's email
+      } else if (!navigator.onLine) {
+        setError("Please check your internet connection and try again");
+      } else {
+        setError("Registration failed. Please try again later.");
+      }
     }
   };
 
@@ -118,8 +132,23 @@ const Register = () => {
           Register
         </button>
         {error && (
-          <p style={{ color: "red", textAlign: "center", margin: "10px 0" }}>
+          <p
+            style={{
+              color: "#dc3545",
+              textAlign: "center",
+              margin: "10px 0",
+              padding: "10px",
+              backgroundColor: "#f8d7da",
+              borderRadius: "4px",
+              border: "1px solid #f5c6cb",
+            }}
+          >
             {error}
+            {existingUser && (
+              <span style={{ display: "block", marginTop: "10px" }}>
+                Already registered with this email: <b>{existingUser}</b>
+              </span>
+            )}
           </p>
         )}
       </form>
