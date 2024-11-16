@@ -21,7 +21,7 @@ const Dashboard = () => {
         setUrls(response.data.urls);
       } catch (error) {
         console.error("Fetch URLs error:", error);
-        navigate("/"); // Redirect to login if not authenticated
+        // navigate("/"); // Redirect to login if not authenticated
       }
     };
     fetchUrls();

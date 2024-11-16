@@ -1,84 +1,127 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 
 const ResetPassword = () => {
-  const { token } = useParams();
-  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const { token } = useParams(); // Extract token from URL
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
+
+    // Validate passwords
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match.");
       return;
     }
+    if (newPassword.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return;
+    }
+
     try {
+      setError(""); // Clear previous errors
+
+      // Call backend API using axios
       const response = await axios.post(
         `https://url-shortener-backend-us50.onrender.com/api/auth/reset-password/${token}`,
-        {
-          password,
-        }
+        { password: newPassword }
       );
-      setMessage(response.data.message);
-      setError("");
-    } catch (error) {
-      setError(error.response?.data?.message || "Password reset failed");
-      setMessage("");
+
+      // Handle success response
+      setSuccess(response.data.message || "Password reset successfully!");
+      setTimeout(() => navigate("/login"), 2000); // Redirect to login after 2 seconds
+    } catch (err) {
+      // Handle error response
+      if (err.response && err.response.data) {
+        setError(err.response.data.message || "Failed to reset password.");
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Reset Password
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <input
-                type="password"
-                value={password}
-                placeholder="New password"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                value={confirmPassword}
-                placeholder="Confirm password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Reset Password
-            </button>
-          </div>
-        </form>
-        {message && (
-          <p className="mt-2 text-center text-sm text-green-600">{message}</p>
-        )}
+    <div
+      style={{
+        maxWidth: "400px",
+        margin: "40px auto",
+        padding: "20px",
+        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+        borderRadius: "8px",
+      }}
+    >
+      <h2
+        style={{
+          textAlign: "center",
+          color: "#333",
+          marginBottom: "30px",
+        }}
+      >
+        Reset Password
+      </h2>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+      >
+        <input
+          type="password"
+          name="newPassword"
+          placeholder="New Password"
+          onChange={(e) => setNewPassword(e.target.value)}
+          value={newPassword}
+          required
+          style={{
+            padding: "12px",
+            borderRadius: "4px",
+            border: "1px solid #ddd",
+            fontSize: "16px",
+          }}
+        />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={confirmPassword}
+          required
+          style={{
+            padding: "12px",
+            borderRadius: "4px",
+            border: "1px solid #ddd",
+            fontSize: "16px",
+          }}
+        />
+        <button
+          type="submit"
+          style={{
+            padding: "12px",
+            backgroundColor: "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            fontSize: "16px",
+            cursor: "pointer",
+            transition: "background-color 0.3s",
+          }}
+        >
+          Reset Password
+        </button>
         {error && (
-          <p className="mt-2 text-center text-sm text-red-600">{error}</p>
+          <p style={{ color: "red", textAlign: "center", margin: "10px 0" }}>
+            {error}
+          </p>
         )}
-      </div>
+        {success && (
+          <p style={{ color: "green", textAlign: "center", margin: "10px 0" }}>
+            {success}
+          </p>
+        )}
+      </form>
     </div>
   );
 };
