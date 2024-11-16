@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
@@ -30,24 +29,30 @@ const Login = () => {
     <div
       style={{
         maxWidth: "400px",
-        margin: "40px auto",
-        padding: "20px",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        borderRadius: "8px",
+        margin: "50px auto",
+        padding: "30px",
+        boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
+        borderRadius: "10px",
+        backgroundColor: "#f9f9f9",
       }}
     >
       <h2
         style={{
           textAlign: "center",
-          color: "#333",
-          marginBottom: "30px",
+          color: "#007bff",
+          marginBottom: "20px",
+          fontWeight: "bold",
         }}
       >
         Login
       </h2>
       <form
         onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "15px",
+        }}
       >
         <input
           name="username"
@@ -55,10 +60,13 @@ const Login = () => {
           onChange={handleChange}
           required
           style={{
-            padding: "12px",
-            borderRadius: "4px",
+            padding: "15px",
+            borderRadius: "5px",
             border: "1px solid #ddd",
             fontSize: "16px",
+            backgroundColor: "#fff",
+            boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)",
+            color: "#333", // Ensure text is visible
           }}
         />
         <input
@@ -68,24 +76,32 @@ const Login = () => {
           onChange={handleChange}
           required
           style={{
-            padding: "12px",
-            borderRadius: "4px",
+            padding: "15px",
+            borderRadius: "5px",
             border: "1px solid #ddd",
             fontSize: "16px",
+            backgroundColor: "#fff",
+            boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)",
+            color: "#333", // Ensure text is visible
           }}
         />
         <button
           type="submit"
           style={{
-            padding: "12px",
+            padding: "15px",
             backgroundColor: "#007bff",
             color: "white",
             border: "none",
-            borderRadius: "4px",
+            borderRadius: "5px",
             fontSize: "16px",
+            fontWeight: "bold",
             cursor: "pointer",
-            transition: "background-color 0.3s",
+            transition: "background-color 0.3s, box-shadow 0.3s",
           }}
+          onMouseOver={(e) =>
+            (e.target.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)")
+          }
+          onMouseOut={(e) => (e.target.style.boxShadow = "none")}
         >
           Login
         </button>
@@ -100,10 +116,13 @@ const Login = () => {
         style={{
           display: "block",
           textAlign: "center",
-          marginTop: "20px",
+          marginTop: "15px",
           color: "#007bff",
           textDecoration: "none",
+          fontWeight: "bold",
         }}
+        onMouseOver={(e) => (e.target.style.textDecoration = "underline")}
+        onMouseOut={(e) => (e.target.style.textDecoration = "none")}
       >
         Forgot Password?
       </Link>
