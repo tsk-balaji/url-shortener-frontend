@@ -18,8 +18,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/shortenUrl" element={<ShortenUrlForm />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-      </Routes>
-      <Routes>
+        {/* Combine ActivateAccount route into main Routes to fix Netlify routing */}
         <Route path="/activate-account/:token" element={<ActivateAccount />} />
       </Routes>
     </Router>
