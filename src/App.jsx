@@ -17,7 +17,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/shortenUrl" element={<ShortenUrlForm />} />
-        <Route path="/activate/:token" component={ActivateAccount} />
+        <Route path="/activate/:token" component={<ActivateAccount />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </Router>
