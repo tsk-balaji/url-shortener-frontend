@@ -14,12 +14,11 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/activate-account/:token" element={<ActivateAccount />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/shortenUrl" element={<ShortenUrlForm />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-        {/* Combine ActivateAccount route into main Routes to fix Netlify routing */}
-        <Route path="/activate-account/:token" element={<ActivateAccount />} />
       </Routes>
     </Router>
   );
