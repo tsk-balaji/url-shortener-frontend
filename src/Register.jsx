@@ -21,9 +21,15 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const { username, firstName, lastName, password } = formData; // Destructure fields
       const response = await axios.post(
         "https://url-shortener-backend-us50.onrender.com/api/auth/register",
-        formData
+        {
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          password: password, // Send each field individually
+        }
       );
       alert(response.data.message); // Registration success message
       navigate("/"); // Redirect to login
