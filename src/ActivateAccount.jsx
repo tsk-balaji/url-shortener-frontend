@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ActivateAccount = () => {
   const { token } = useParams(); // Get token from the URL
-  const history = useHistory();
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -19,7 +19,7 @@ const ActivateAccount = () => {
         setLoading(false);
         // Redirect to login page after successful activation
         setTimeout(() => {
-          history.push("/login");
+          navigate("/login");
         }, 2000);
       } catch (error) {
         setMessage(error.response?.data?.message || "Error activating account");
@@ -30,7 +30,7 @@ const ActivateAccount = () => {
     if (token) {
       activateAccount();
     }
-  }, [token, history]);
+  }, [token, navigate]);
 
   return (
     <div className="container">
