@@ -18,9 +18,10 @@ const ActivateAccount = () => {
         setMessage(response.data.message);
         setLoading(false);
         // Redirect to login page after successful activation
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           navigate("/login");
         }, 2000);
+        return () => clearTimeout(timer);
       } catch (error) {
         setMessage(error.response?.data?.message || "Error activating account");
         setLoading(false);
