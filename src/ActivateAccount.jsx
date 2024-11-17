@@ -28,9 +28,7 @@ const ActivateAccount = () => {
       }
     };
 
-    if (token) {
-      activateAccount();
-    }
+    activateAccount();
   }, [token, navigate]);
 
   return (
